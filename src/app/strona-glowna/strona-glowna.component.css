@@ -1,10 +1,9 @@
 .background{
-
-  @apply w-full h-full bg-amber-300 w-max
+  @apply w-full h-fit bg-gradient-to-b from-neutral-50 via-amber-100 to-amber-200
 }
 
 section{
-  @apply w-full h-full flex flex-col grid grid-cols-1 bg-gradient-to-b from-neutral-50 via-amber-100 to-amber-200
+  @apply w-full flex flex-col grid grid-cols-1
 }
 
 h1{
