@@ -18,6 +18,14 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatMenuModule} from '@angular/material/menu';
 import { FooterComponent } from './footer/footer.component';
+import {HttpServiceService} from "./servis/http-service.service";
+import {HttpClientModule} from "@angular/common/http";
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -26,7 +34,9 @@ import { FooterComponent } from './footer/footer.component';
     StronaGlownaComponent,
     NavigatorComponent,
     ShopComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,8 +52,13 @@ import { FooterComponent } from './footer/footer.component';
     MatSidenavModule,
     MatMenuModule,
     NgbCarouselModule,
+    HttpClientModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatChipsModule,
   ],
-  providers: [],
+  providers: [HttpServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

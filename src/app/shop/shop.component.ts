@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Item} from "../interface/item";
+import {HttpServiceService} from "../servis/http-service.service";
 
 @Component({
   selector: 'app-shop',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
-  constructor() { }
+  constructor(private httpService: HttpServiceService) { }
+
+  public listItems: Item[] = [];
 
   ngOnInit(): void {
+  this.getItem()
+  }
+
+  getItem(){
+    this.httpService.getItems().subscribe(
+      (data: Item []) =>{ this.listItems = data}
+    )
   }
 
 }
