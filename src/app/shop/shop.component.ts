@@ -23,4 +23,12 @@ export class ShopComponent implements OnInit {
     )
   }
 
+  // sortItemsByPrice(){
+  //   for (let i=0; i< this.listItems.length; i++){
+  //     if (this.listItems[i].cena < this.listItems[i+1].cena){
+  //       this.listItems.push();
+  //     }
+  //   }
+  // }
+
 }

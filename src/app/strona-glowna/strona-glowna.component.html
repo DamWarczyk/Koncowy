@@ -11,13 +11,13 @@
       <ng-template *ngFor="let item of listItems; index as i" ngbSlide>
         <div>
           <div class="lg:py-12 lg:flex lg:justify-center">
-            <div class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
+            <div class="bg-white lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg md:rounded">
               <div class="lg:w-1/2">
-                <div class="h-64 bg-cover lg:rounded-lg lg:h-full"  [style.background-image]="'url(' + item.imageUrl + ')'"></div>
+                <div class="h-64 bg-cover lg:rounded-lg lg:h-full lg:w-96 md:rounded"  [style.background-image]="'url(' + item.imageUrl + ')'"></div>
               </div>
-              <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-1/2">
+              <div class="py-12 px-6 max-w-xl lg:max-w-5xl lg:w-96">
                 <h2 class="text-3xl text-gray-800 font-bold">{{item.name}}</h2>
-                <p class="mt-4 text-gray-600"> temporibus enim expedita aperiam mollitia iure consectetur dicta tenetur, porro consequuntur saepe accusantium consequatur.</p>
+                <p class="mt-4 text-gray-600">{{item.opis}}</p>
                 <div class="mt-8">
                   <button class="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-amber-400 rounded-md hover:bg-amber-200 focus:outline-none focus:bg-amber-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-1" viewBox="0 0 20 20" fill="currentColor">
