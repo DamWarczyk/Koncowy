@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {FormsModule} from "@angular/forms";
 import { StronaGlownaComponent } from './strona-glowna/strona-glowna.component';
 import {NavigatorComponent} from "./navigator/navigator.component";
-import { ShopComponent } from './shop/shop.component';
+import {ItemAdd, ItemUpdate, ShopComponent} from './shop/shop.component';
 import { NavigationModule } from './navigation.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +26,13 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
+import {JwtModule} from "@auth0/angular-jwt";
+import {MatDialogModule} from "@angular/material/dialog";
 
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -37,6 +43,8 @@ import {MatChipsModule} from "@angular/material/chips";
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    ItemAdd,
+    ItemUpdate,
   ],
   imports: [
     BrowserModule,
@@ -53,10 +61,21 @@ import {MatChipsModule} from "@angular/material/chips";
     MatMenuModule,
     NgbCarouselModule,
     HttpClientModule,
+    MatDialogModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
     MatChipsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        headerName: "Authorization",
+        authScheme: "",
+        allowedDomains: ["localhost:8080"],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
+
   ],
   providers: [HttpServiceService],
   bootstrap: [AppComponent]

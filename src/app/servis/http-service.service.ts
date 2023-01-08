@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Student} from "../Interface/student";
 import {environment} from "../../environments/environment";
 import {Item} from "../interface/item";
+import {Login} from "../interface/login";
+import {Token} from "../interface/token";
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +23,15 @@ export class HttpServiceService {
     return this.http.get<any>(`${this.apiServerURL}/student/find/${id}`);
   }
 
-
   public addStudent(student: Student): Observable<Student>{
     return this.http.post<any>(`${this.apiServerURL}/student/add`, student);
   }
-
+  public login(login: Login): Observable<Token>{
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+    return this.http.post<any>(`${this.apiServerURL}/login`, `email=${login.email}&password=${login.password}`, options)
+  }
   public updateStudent(student: Student): Observable<Student>{
     return this.http.put<any>(`${this.apiServerURL}/student/update`, student);
   }
@@ -47,12 +53,14 @@ export class HttpServiceService {
     return this.http.post<any>(`${this.apiServerURL}/item/add`, item);
   }
 
-  public updateItem(item: Item): Observable<Item>{
-    return this.http.put<any>(`${this.apiServerURL}/item/update`, item);
+  public updateItem(item: Item, id: number): Observable<Item>{
+    return this.http.put<any>(`${this.apiServerURL}/item/update/${id}`, item);
   }
 
   public deleteItem(itemId: number): Observable<void>{
     return this.http.delete<void>(`${this.apiServerURL}/item/delete/${itemId}`);
   }
+
+
 
 }

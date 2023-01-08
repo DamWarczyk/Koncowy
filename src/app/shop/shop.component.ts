@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Item} from "../interface/item";
 import {HttpServiceService} from "../servis/http-service.service";
+import {AuthService} from "../servis/auth.service";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-shop',
@@ -9,18 +12,29 @@ import {HttpServiceService} from "../servis/http-service.service";
 })
 export class ShopComponent implements OnInit {
 
-  constructor(private httpService: HttpServiceService) { }
+  constructor(private httpService: HttpServiceService, public auth: AuthService, public dialog: MatDialog) {
+  }
 
   public listItems: Item[] = [];
 
-  ngOnInit(): void {
-  this.getItem()
+  hasRole(role: string): boolean {
+    return this.auth.user?.roles.includes(role) || false;
   }
 
-  getItem(){
+  ngOnInit(): void {
+    this.getItem()
+  }
+
+  getItem() {
     this.httpService.getItems().subscribe(
-      (data: Item []) =>{ this.listItems = data}
+      (data: Item []) => {
+        this.listItems = data
+      }
     )
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(ItemAdd);
   }
 
   // sortItemsByPrice(){
@@ -31,4 +45,64 @@ export class ShopComponent implements OnInit {
   //   }
   // }
 
+  onClick() {
+    console.log("Zakupiono")
+  }
+
+  deleteItem(item: Item) {
+    this.httpService.deleteItem(item.id).subscribe();
+    this.getItem();
+  }
+
+  updateItem(item: Item) {
+    this.dialog.open(ItemUpdate, {data: item});
+  }
+}
+
+@Component({
+  selector: 'itemadd',
+  templateUrl: './itemadd.html',
+})
+export class ItemAdd {
+  myForm: FormGroup;
+  item!: Item;
+
+  constructor(public dialogRef: MatDialogRef<ItemAdd>, private fb: FormBuilder, private httpservice: HttpServiceService) {
+    this.myForm = this.fb.group({
+      name: ['', [Validators.required]],
+      cena: ['', [Validators.required, Validators.min(1)]],
+      opis: ['', [Validators.required]],
+      imageUrl: ['', [Validators.required]]
+    })
+  }
+
+  onClick() {
+    this.item = this.myForm.value;
+    this.httpservice.addItem(this.item).subscribe();
+  }
+}
+
+@Component({
+  selector: 'itemupdate',
+  templateUrl: './itemupdate.html',
+})
+export class ItemUpdate {
+  myForm: FormGroup;
+  item: Item;
+
+  constructor(public dialogRef: MatDialogRef<ItemUpdate>, private fb: FormBuilder, private httpservice: HttpServiceService,  @Inject(MAT_DIALOG_DATA) public data: Item) {
+    this.myForm = this.fb.group({
+      name: [this.data.name, [Validators.required]],
+      cena: [this.data.cena, [Validators.required, Validators.min(1)]],
+      opis: [this.data.opis, [Validators.required]],
+      imageUrl: [this.data.imageUrl, [Validators.required]]
+    })
+    this.item = this.data;
+  }
+
+  onClick() {
+    this.item.id = this.data.id;
+    this.item = this.myForm.value;
+    this.httpservice.updateItem(this.item, this.data.id).subscribe();
+  }
 }

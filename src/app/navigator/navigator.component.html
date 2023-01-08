@@ -12,6 +12,11 @@
           <svg class="h-8 w-8 text-yellow-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M6 5h12l3 5l-8.5 9.5a.7 .7 0 0 1 -1 0l-8.5 -9.5l3 -5" />  <path d="M10 12l-2 -2.2l.6 -1" /></svg>
       </span>
         <span class="example-spacer"></span>
+        <ng-container *ngIf="auth.isLoggedIn$ | async">
+        <button mat-raised-button class="buttons" aria-label="Example icon-button with heart icon" routerLink="/strona" (click)="logOut()">
+          Wyloguj
+        </button>
+        </ng-container>
         <button mat-raised-button class="buttons" aria-label="Example icon-button with heart icon" routerLink="/login">
           Zaloguj
         </button>

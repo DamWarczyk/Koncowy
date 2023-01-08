@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import {AuthService} from "../servis/auth.service";
 
 
 @Component({
@@ -14,6 +15,7 @@ export class NavigatorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    public auth: AuthService,
   ) {}
 
 
@@ -22,4 +24,8 @@ export class NavigatorComponent implements OnInit {
 
 
   shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(window.location.host);
+
+  logOut() {
+  this.auth.logout();
+  }
 }
