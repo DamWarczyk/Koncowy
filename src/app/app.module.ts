@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {FormsModule} from "@angular/forms";
 import { StronaGlownaComponent } from './strona-glowna/strona-glowna.component';
 import {NavigatorComponent} from "./navigator/navigator.component";
-import {ItemAdd, ItemUpdate, ShopComponent} from './shop/shop.component';
+import {ItemAdd, ItemBuy, ItemUpdate, ShopComponent} from './shop/shop.component';
 import { NavigationModule } from './navigation.module';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +19,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatMenuModule} from '@angular/material/menu';
 import { FooterComponent } from './footer/footer.component';
 import {HttpServiceService} from "./servis/http-service.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {MatInputModule} from "@angular/material/input";
@@ -28,6 +28,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
 import {JwtModule} from "@auth0/angular-jwt";
 import {MatDialogModule} from "@angular/material/dialog";
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {ErrorHandlerInterceptor} from "./interceptors/error-handler.interceptor";
 
 
 export function tokenGetter() {
@@ -45,6 +49,8 @@ export function tokenGetter() {
     RegisterComponent,
     ItemAdd,
     ItemUpdate,
+    ItemBuy,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +72,8 @@ export function tokenGetter() {
     MatSelectModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatSnackBarModule,
+    MatExpansionModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -77,7 +85,9 @@ export function tokenGetter() {
     }),
 
   ],
-  providers: [HttpServiceService],
+  providers: [HttpServiceService, {provide: HTTP_INTERCEPTORS,
+    useClass: ErrorHandlerInterceptor,
+    multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Student} from "../Interface/student";
+import {Student} from "../interface/student";
 import {HttpServiceService} from "../servis/http-service.service";
 import {HttpErrorResponse} from "@angular/common/http";
 

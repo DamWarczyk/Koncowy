@@ -18,6 +18,9 @@ export class NavigatorComponent implements OnInit {
     public auth: AuthService,
   ) {}
 
+  hasRole(role: string): boolean {
+    return this.auth.user?.roles.includes(role) || false;
+  }
 
   ngOnInit(): void {
   }

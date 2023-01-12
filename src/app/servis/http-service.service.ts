@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Student} from "../Interface/student";
+import {Student} from "../interface/student";
 import {environment} from "../../environments/environment";
 import {Item} from "../interface/item";
 import {Login} from "../interface/login";
@@ -61,6 +61,17 @@ export class HttpServiceService {
     return this.http.delete<void>(`${this.apiServerURL}/item/delete/${itemId}`);
   }
 
+  public buyItem(itemId: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiServerURL}/item/buyItem/${itemId}`);
+  }
 
+  public addRoleToUser(email: String, roleName: String): Observable<void>{
+    return this.http.post<any>(`${this.apiServerURL}/student/role/addtouser`,
+      {"email": email, "roleName": roleName});
+  }
+
+  public addRole(role: string): Observable<void>{
+    return this.http.post<any>(`${this.apiServerURL}/student/role/add`, role);
+  }
 
 }

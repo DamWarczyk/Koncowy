@@ -5,6 +5,9 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/oferta">Oferta</button>
           <button mat-menu-item>Regulamin</button>
+          <ng-container *ngIf="hasRole('ROLE_ADMIN')">
+            <button mat-menu-item routerLink="/admin">Panel Admina</button>
+          </ng-container>
         </mat-menu>
         <span class="example-spacer"></span>
         <span class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl " routerLink="/strona">
@@ -13,16 +16,21 @@
       </span>
         <span class="example-spacer"></span>
         <ng-container *ngIf="auth.isLoggedIn$ | async">
-        <button mat-raised-button class="buttons" aria-label="Example icon-button with heart icon" routerLink="/strona" (click)="logOut()">
+          Witaj {{auth.user!.sub}}
+          <button mat-raised-button class="buttons" aria-label="Example icon-button with heart icon" routerLink="/strona" (click)="logOut()">
           Wyloguj
         </button>
         </ng-container>
+        <ng-container *ngIf="!(auth.isLoggedIn$ | async)">
         <button mat-raised-button class="buttons" aria-label="Example icon-button with heart icon" routerLink="/login">
           Zaloguj
         </button>
+        </ng-container>
+        <ng-container *ngIf="!(auth.isLoggedIn$ | async)">
         <button mat-raised-button class="buttons" aria-label="Example icon-button with share icon" routerLink="/register">
           Zarejestruj
         </button>
+        </ng-container>
       </mat-toolbar>
   </nav>
 
